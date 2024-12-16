@@ -18,4 +18,5 @@ public class Order {
 private Long id;
 private List<Dish> pratos = new ArrayList<>();
 private double valorTotal;
+private int numeroMesa;
 }
