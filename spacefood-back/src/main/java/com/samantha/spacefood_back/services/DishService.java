@@ -15,26 +15,28 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class DishService {
+	
 	private final DishRepo dishRepo;
 	
-	//CRIAR PRATO
 	public Dish createDish(DishDTO dto) {
 		Dish prato = new Dish(dto.id(), dto.nome(),
 		dto.descricao(), dto.preco(), dto.imagem());
 		return dishRepo.save(prato);
 	}
 	
-	//LISTAR PRATOS
 	public Page<Dish> readDishes(Pageable pageable){
 		return dishRepo.findAll(pageable);
 	}
 	
-	//REMOVER PRATO
-	public void delete(Long id) {
-		dishRepo.deleteById(id);
+	public void delete(Long id) throws Exception {
+		Optional<Dish> deleteDish = dishRepo.FindDishById(id);
+		if (deleteDish.isPresent()) {
+			dishRepo.deleteById(id);
+		}else {
+			throw new Exception("Não possível identificar prato.");
+		}
 }
 	
-	//ATUALIZAR PRATO
 	public void updateDish(DishDTO dto) throws Exception {
 		Optional<Dish> findDish = dishRepo.findById(dto.id());
 		

@@ -4,6 +4,6 @@ import java.util.List;
 
 import com.samantha.spacefood_back.entities.Dish;
 
-public record OrderDTO(Long id, List<Dish> pratos, double valortotal, int numeromesa) {
+public record OrderDTO(List<Dish> pratos,List<String> pratosPedidos,int numeroMesa) {
 
 }

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,25 +26,22 @@ import lombok.RequiredArgsConstructor;
 public class DishController {
 	private final DishService service;
 	
-	//CREATE
-	@GetMapping("/adicionar")
+	@PostMapping("/adicionar")
 	public ResponseEntity<Dish> create(@RequestBody @Valid DishDTO dto){
 		return new ResponseEntity<>(service.createDish(dto), HttpStatus.CREATED);
 	}
-	//READ
+
 	@GetMapping("/listar")
 	public ResponseEntity<Page<Dish>> read (Pageable pageable){
 		return ResponseEntity.ok(service.readDishes(pageable));
 	}
 	
-	//REMOVE
 	@DeleteMapping(path = "/remover/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id){
+	public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception{
 		service.delete(id);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
 	
-	//UPDATE
 	@PutMapping("/atualizar")
 	public ResponseEntity<Void> update(@RequestBody @Valid DishDTO dto) throws Exception{
 		service.updateDish(dto);
