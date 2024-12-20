@@ -41,11 +41,9 @@ private int numeroMesa;
 
 public void addDish(List<Dish> pratosEncontrados) {
 	pratos.addAll(pratosEncontrados);
-	for (Dish prato : pratosEncontrados) {
-		this.valorTotal+=prato.getPreco();
-		setValorTotal(valorTotal);
+	double totalAdd = pratosEncontrados.stream()
+			.mapToDouble(Dish::getPreco).sum();
+	this.valorTotal += totalAdd;
 	}
-
-}
 
 }
