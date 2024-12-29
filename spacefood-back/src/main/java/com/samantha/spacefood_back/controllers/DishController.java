@@ -38,7 +38,7 @@ public class DishController {
 		return ResponseEntity.ok(service.readDishes(pageable));
 	}
 	
-	@GetMapping("{categoria}")
+	@GetMapping("/category/{categoria}")
 	public ResponseEntity<List<Dish>> categories(@PathVariable String categoria) throws Exception{
 		List<Dish> getCategories = service.getCategory(categoria);
 		return new ResponseEntity<>(getCategories, HttpStatus.OK);
