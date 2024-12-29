@@ -17,4 +17,7 @@ public interface DishRepo extends JpaRepository<Dish, Long>{
 	
 	@Query("SELECT d FROM Dish d WHERE d.id= :id")
 	Optional<Dish> FindDishById(@Param("id")Long id);
+	
+	@Query("SELECT c FROM Dish c WHERE c.categoria= :categoria")
+	List<Dish> findByCategory(@Param("categoria") String categoria);
 }

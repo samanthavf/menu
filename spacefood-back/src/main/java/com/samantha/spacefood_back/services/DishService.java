@@ -1,5 +1,6 @@
 package com.samantha.spacefood_back.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -20,12 +21,20 @@ public class DishService {
 	
 	public Dish createDish(DishDTO dto) {
 		Dish prato = new Dish(dto.id(), dto.nome(),
-		dto.descricao(), dto.preco(), dto.imagem());
+		dto.descricao(), dto.preco(), dto.imagem(), dto.categoria());
 		return dishRepo.save(prato);
 	}
 	
 	public Page<Dish> readDishes(Pageable pageable){
 		return dishRepo.findAll(pageable);
+	}
+	
+	public List<Dish> getCategory(String categoria) throws Exception{
+		List<Dish> categorias = dishRepo.findByCategory(categoria);
+		if (categorias.isEmpty()) {
+			throw new Exception("Nenhum prato encontrado nesta categoria.");
+		}
+		return categorias;
 	}
 	
 	public void delete(Long id) throws Exception {
