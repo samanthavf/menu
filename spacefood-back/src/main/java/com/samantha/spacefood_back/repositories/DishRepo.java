@@ -12,6 +12,7 @@ import com.samantha.spacefood_back.entities.Dish;
 
 @Repository
 public interface DishRepo extends JpaRepository<Dish, Long>{
+	
 	@Query("SELECT d FROM Dish d WHERE d.nome IN :nome")
 	List<Dish> findByNameIn(@Param("nome") List<String> nome);
 	
@@ -20,4 +21,8 @@ public interface DishRepo extends JpaRepository<Dish, Long>{
 	
 	@Query("SELECT c FROM Dish c WHERE c.categoria= :categoria")
 	List<Dish> findByCategory(@Param("categoria") String categoria);
+	
+	@Query("SELECT DISTINCT c.categoria FROM Dish c WHERE c.categoria IS NOT NULL")
+	List<String> findAllCategories();
+
 }

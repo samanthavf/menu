@@ -1,6 +1,7 @@
 package com.samantha.spacefood_back.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -42,6 +43,12 @@ public class DishController {
 	public ResponseEntity<List<Dish>> categories(@PathVariable String categoria) throws Exception{
 		List<Dish> getCategories = service.getCategory(categoria);
 		return new ResponseEntity<>(getCategories, HttpStatus.OK);
+	}
+	
+	@GetMapping("/categorias/comidas")
+	public ResponseEntity<Map<String, List<Dish>>> getAllCategorires(){
+		Map<String, List<Dish>> dishesByCategory = service.getAllCtaegories();
+		return ResponseEntity.ok(dishesByCategory);
 	}
 	
 	@DeleteMapping(path = "/remover/{id}")

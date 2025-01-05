@@ -1,6 +1,8 @@
 package com.samantha.spacefood_back.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -35,6 +37,15 @@ public class DishService {
 			throw new Exception("Nenhum prato encontrado nesta categoria.");
 		}
 		return categorias;
+	}
+	
+	public Map<String, List<Dish>> getAllCtaegories(){
+		List<String> categorias = dishRepo.findAllCategories();
+		Map<String, List<Dish>> dishesByCategory = new HashMap<>();
+		
+		categorias.forEach(categoria -> dishesByCategory
+		.put(categoria, dishRepo.findByCategory(categoria)));
+		return dishesByCategory;
 	}
 	
 	public void delete(Long id) throws Exception {
