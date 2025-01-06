@@ -45,10 +45,15 @@ transform: translate(-50%, -50%); /* Ajusta a posição para o centro exato */
 
 .menu-container{
     position: absolute;
-    width: 100%;
+    width: 75%;
     height: 85vh;
     bottom: 5%;
     right: 15px;
     background: linear-gradient(135deg, #e0f7fa, #c8b6e2, 0.2);
     overflow-x: hidden;
+}
+
+.row{
+    width: 70%;
+    height: 95vh;
 }

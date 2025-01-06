@@ -3,7 +3,7 @@ body {
     padding: 0;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(135deg, #e0f7fa, #c8b6e2);
+    background: linear-gradient(135deg, #e8f9fc, #d0c2e4);
     background-size: 400% 400%;
     animation: backgroundShift 10s ease infinite;
     display: flex;
