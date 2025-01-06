@@ -9,8 +9,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
-    font-family: Arial, sans-serif;
+    color: #0288d1; /* Azul escuro para o texto */
+    font-family:'Poppins', sans-serif;
 }
 
 @keyframes backgroundShift {

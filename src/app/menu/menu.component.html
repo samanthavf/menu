@@ -8,4 +8,34 @@
     <img src="spaceman-noodles.png" alt="spaceman-noodles">
 </div>
 
-<div class="menu-container"></div>
+<div class="menu-container">
+  
+  <div class="container mt-4">
+    <div *ngFor="let categoria of pratosPorCategoria | keyvalue" class="mb-5">
+      <h2>{{ categoria.key }}</h2> <!-- Nome da categoria -->
+      <div class="row">
+        <div class="col-md-4" *ngFor="let prato of categoria.value">
+          <div class="card mb-3 shadow-sm">
+            <img
+              *ngIf="prato.imagem"
+              [src]="prato.imagem"
+              class="card-img-top"
+              alt="{{ prato.nome }}"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ prato.nome }}</h5>
+              <p class="card-text">{{ prato.descricao }}</p>
+              <p class="card-text">Preço: {{ prato.preco | currency: 'BRL' }}</p>
+              <button class="btn btn-primary" (click)="addToCart(prato)">
+               adicionar ao carrinho
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+</div>
+

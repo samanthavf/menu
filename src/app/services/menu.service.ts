@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Dishes } from "../model/Dishes";
+import { DishesByCategory } from "../model/Dishes";
 import { Injectable } from "@angular/core";
 
 
@@ -13,8 +13,8 @@ export class MenuService{
 
     private urlcategoria:string='http://localhost:8080/dish/categorias/comidas'
 
-    getAll(): Observable<Dishes[]>{
-        return this.http.get<Dishes[]>(this.urlcategoria);
+    getAll(): Observable<DishesByCategory>{
+        return this.http.get<DishesByCategory>(this.urlcategoria);
     }
 
 }
