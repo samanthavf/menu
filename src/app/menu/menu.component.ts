@@ -3,6 +3,7 @@ import { MenuService } from '../services/menu.service';
 import { Dish, DishesByCategory } from '../model/Dishes';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -16,8 +17,7 @@ import { CommonModule } from '@angular/common';
 })
 
 export class MenuComponent {
-
-constructor(private service:MenuService){}
+constructor(private service:MenuService, private router:Router){}
 
 results: any[] = [];
 prato = new Dish();
@@ -44,4 +44,8 @@ addToCart(prato: Dish) {
   console.log('Prato adicionado ao carrinho:', prato);
   // Lógica para adicionar ao carrinho
 }
+carrinho() {
+  this.router.navigate(['/carrinho'])
+  }
+  
 }
