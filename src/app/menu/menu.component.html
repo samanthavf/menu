@@ -26,7 +26,7 @@
               <h5 class="card-title">{{ prato.nome }}</h5>
               <p class="card-text">{{ prato.descricao }}</p>
               <p class="card-text">Preço: {{ prato.preco | currency: 'BRL' }}</p>
-              <button class="btn btn-primary" (click)="addToCart(prato)">
+              <button class="btn btn-primary" (click)="addCarrinho(prato)">
                adicionar ao carrinho
               </button>
             </div>

@@ -6,3 +6,31 @@
 <div class="image-back">
     <img src="spaceman-donouts.png" alt="sapceman-donouts">
 </div>
+
+<div class="container-back">
+        <div class="container-tabela">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Imagem</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>Remover</th>
+              </tr>
+            </thead>
+            <tbody>
+                  <tr *ngFor="let prato of prato.pratoSelecionado">
+                    <td>
+                      <img [src]="prato.imagem" alt="{{ prato.nome }}" width="100" height="100" />
+                    </td>
+                    <td>{{ prato.nome }}</td>
+                    <td>{{ prato.preco | currency: 'BRL' }}</td>
+                    <td>
+                  <button (click)="remover(prato)" class="btn btn-danger">Remover</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+</div>

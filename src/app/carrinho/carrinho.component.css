@@ -26,3 +26,13 @@
     margin-top: 8px;
     font-size: 40px;
 }
+
+.container-back{
+    position: absolute;
+    width: 75%;
+    height: 75vh;
+    bottom: 10%;
+    left: 12%;
+    background: linear-gradient(135deg, #e0f7fa, #c8b6e2, 0.2);
+    overflow-x: hidden;
+}
