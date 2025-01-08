@@ -46,4 +46,5 @@ public void addDish(List<Dish> pratosEncontrados) {
 	this.valorTotal += totalAdd;
 	}
 
+
 }

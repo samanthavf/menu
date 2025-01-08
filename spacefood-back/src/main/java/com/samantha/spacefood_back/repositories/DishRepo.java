@@ -14,7 +14,7 @@ import com.samantha.spacefood_back.entities.Dish;
 public interface DishRepo extends JpaRepository<Dish, Long>{
 	
 	@Query("SELECT d FROM Dish d WHERE d.nome IN :nome")
-	List<Dish> findByNameIn(@Param("nome") List<String> nome);
+	List<Dish> findByNameIn(@Param("nome") List<String> nomePrato);
 	
 	@Query("SELECT d FROM Dish d WHERE d.id= :id")
 	Optional<Dish> FindDishById(@Param("id")Long id);
