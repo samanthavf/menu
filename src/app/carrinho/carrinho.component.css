@@ -34,5 +34,12 @@
     bottom: 10%;
     left: 12%;
     background: linear-gradient(135deg, #e0f7fa, #c8b6e2, 0.2);
-    overflow-x: hidden;
+    overflow-y: scroll;
+
+}
+
+#menu-button{
+    position: absolute;
+    right: 5%;
+    margin-top: 15px;
 }

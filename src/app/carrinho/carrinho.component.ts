@@ -38,7 +38,25 @@ getOrders(){
   );
 }
 
-remover(_t18: Dish) {
-  throw new Error('Method not implemented.');
+remover(prato: Dish) {
+  this.service.removeToCart(prato).subscribe({
+    next:(retorno)=>{
+      console.log('Prato removido com sucesso.', retorno);
+
+      try {
+        this.getOrders();
+      } catch (error) {
+        console.log('Erro ao atualizar lista de pratos', error)
+        location.reload();
+      }
+    },error: (error)=>{
+      console.log('Erro ao remover prato', error);
+    }
+  });
   }
+
+back() {
+  this.router.navigate(['/menu'])
+  }
+
 }

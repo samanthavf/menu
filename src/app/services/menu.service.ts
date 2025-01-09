@@ -28,4 +28,9 @@ export class MenuService{
     addToCart(prato: Dish): Observable<Cart>{
         return this.http.post<Cart>(this.urlAdicionarCart, prato);
     }
+
+    private urlremoverPrato:string='http://localhost:8080/cart/remover/1'
+    removeToCart(prato:Dish):Observable<Cart>{
+        return this.http.put<Cart>(this.urlremoverPrato, prato);
+    }
 }
