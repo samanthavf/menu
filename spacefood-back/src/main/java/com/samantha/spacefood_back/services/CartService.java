@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.samantha.spacefood_back.dtos.CartRequestDTO;
 import com.samantha.spacefood_back.entities.Cart;
 import com.samantha.spacefood_back.entities.Dish;
 import com.samantha.spacefood_back.exception.CartNotFoundException;
@@ -37,33 +38,43 @@ public class CartService {
 	}
 
 	
-	public Cart addDish(Long cartId, Dish prato) {
+	public Cart addDish(Long cartId,CartRequestDTO prato) {
 		Optional<Cart> findCart = cartRepo.findById(cartId);
-		
+	    if (findCart.isEmpty()) {throw new RuntimeException("Carrinho não encontrado");}
 		Cart carrinho = findCart.get();
-		carrinho.getPratoSelecionado().add(prato); 
 		
-		double precoFinal = carrinho.getValorTotal()+prato.getPreco();
-		carrinho.setValorTotal(precoFinal);
+		Optional<Dish> exitingDish = carrinho.getPratoSelecionado().stream()
+				.filter(p -> p.getId().equals(prato.prato().getId())).findFirst();
+		
+		if (exitingDish.isPresent()) {
+			Dish pratoExiste = exitingDish.get();
+			
+			double precoFinal = (pratoExiste.getPreco()*prato.quantidade())+carrinho.getValorTotal();
+			carrinho.setValorTotal(precoFinal);
+		}else {
+			double precoFinal = (prato.prato().getPreco()*prato.quantidade())+carrinho.getValorTotal();
+			carrinho.setValorTotal(precoFinal);
+			
+			carrinho.getPratoSelecionado().add(prato.prato());
+		}
 		
 		return cartRepo.save(carrinho);
 	}
 	
 	
-	public Cart removeDish(Long cartId, Dish prato) throws Exception {
+	public void removeDish(Long cartId, Dish prato) throws Exception {
 		Optional<Cart> findCart = cartRepo.findById(cartId);
 		
 		if (findCart.isPresent()) {
-			
 			Cart carrinho = findCart.get();
 			
 			if (carrinho.getPratoSelecionado().contains(prato)) {
-				
 				double precoFinal = carrinho.getValorTotal()-prato.getPreco();
-				carrinho.setValorTotal(Math.max(precoFinal, 0));
-				carrinho.getPratoSelecionado().remove(prato);
 				
-				return cartRepo.save(carrinho);		
+				carrinho.setValorTotal(Math.max(precoFinal, 0));
+				
+				carrinho.getPratoSelecionado().remove(prato);
+			    cartRepo.save(carrinho);		
 			}else {
 	            throw new Exception("Prato não encontrado no carrinho.");
 	        }	

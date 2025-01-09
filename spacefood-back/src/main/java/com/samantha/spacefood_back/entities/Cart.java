@@ -26,7 +26,6 @@ public class Cart {
 	private Long id;
 	@OneToMany( fetch = FetchType.EAGER)
 	@JoinColumn(name = "cart_dishes")
-	private List<Dish> pratoSelecionado = new ArrayList<>();
+	private List<Dish> pratoSelecionado = new ArrayList<>();	
 	private double valorTotal;
-
 }
