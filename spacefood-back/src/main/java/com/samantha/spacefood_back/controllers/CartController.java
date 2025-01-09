@@ -32,7 +32,7 @@ public class CartController {
 	}
 	
 	@GetMapping("/listar/{id}")
-	public ResponseEntity<Cart> read (@PathVariable Long id){
+	public ResponseEntity<Cart> read(@PathVariable Long id){
 		try {
 			return ResponseEntity.ok(service.cart(id));
 		} catch (CartNotFoundException e) {
@@ -46,9 +46,8 @@ public class CartController {
 	}
 	
 	@PutMapping("/remover/{cartId}")
-	public ResponseEntity<String> update(@PathVariable Long cartId,@RequestBody Dish prato) throws Exception{
-			service.removeDish(cartId, prato);
-			return ResponseEntity.ok("Prato movido com sucesso.");
-		
+	public ResponseEntity<Cart> update(@PathVariable Long cartId,@RequestBody Dish prato) throws Exception{
+			//Cart updateCart = service.removeDish(cartId, prato);
+			return ResponseEntity.ok(service.removeDish(cartId, prato));
 	}
 }

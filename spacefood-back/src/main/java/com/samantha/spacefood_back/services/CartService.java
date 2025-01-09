@@ -50,7 +50,7 @@ public class CartService {
 	}
 	
 	
-	public void removeDish(Long cartId, Dish prato) throws Exception {
+	public Cart removeDish(Long cartId, Dish prato) throws Exception {
 		Optional<Cart> findCart = cartRepo.findById(cartId);
 		
 		if (findCart.isPresent()) {
@@ -59,12 +59,11 @@ public class CartService {
 			
 			if (carrinho.getPratoSelecionado().contains(prato)) {
 				
-				carrinho.getPratoSelecionado().remove(prato);
-				
 				double precoFinal = carrinho.getValorTotal()-prato.getPreco();
 				carrinho.setValorTotal(Math.max(precoFinal, 0));
+				carrinho.getPratoSelecionado().remove(prato);
 				
-				cartRepo.save(carrinho);		
+				return cartRepo.save(carrinho);		
 			}else {
 	            throw new Exception("Prato não encontrado no carrinho.");
 	        }	
