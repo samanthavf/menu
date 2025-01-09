@@ -23,7 +23,7 @@ public class DishService {
 	
 	public Dish createDish(DishDTO dto) {
 		Dish prato = new Dish(dto.id(), dto.nome(),
-		dto.descricao(), dto.preco(), dto.imagem(), dto.categoria());
+		dto.descricao(), dto.preco(), dto.imagem(), dto.categoria(), dto.quantidade());
 		return dishRepo.save(prato);
 	}
 	
