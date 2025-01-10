@@ -5,10 +5,11 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.samantha.spacefood_back.dtos.CartRequestDTO;
+import com.samantha.spacefood_back.dtos.CartDishDTO;
 import com.samantha.spacefood_back.entities.Cart;
-import com.samantha.spacefood_back.entities.Dish;
+import com.samantha.spacefood_back.entities.CartDish;
 import com.samantha.spacefood_back.exception.CartNotFoundException;
+import com.samantha.spacefood_back.repositories.CartDishRepo;
 import com.samantha.spacefood_back.repositories.CartRepo;
 
 import jakarta.transaction.Transactional;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class CartService {
 	private final CartRepo cartRepo;
+	private final CartDishRepo cartDishRepo;
 	
 	@Transactional
 	public Cart cart(Long id){
@@ -38,44 +40,54 @@ public class CartService {
 	}
 
 	
-	public Cart addDish(Long cartId,CartRequestDTO cart) {
+	public Cart addDish(Long cartId,CartDishDTO cart) {
 		Optional<Cart> findCart = cartRepo.findById(cartId);
 	    if (findCart.isEmpty()) {throw new RuntimeException("Carrinho não encontrado");}
 		Cart carrinho = findCart.get();
 		
-		Optional<Dish> exitingDish = carrinho.getPratoSelecionado().stream()
-				.filter(p -> p.getId().equals(cart.prato().getId())).findFirst();
+		Optional<CartDish> pratoExiste = carrinho.getPratoSelecionado().stream()
+				.filter(dish -> dish.getId().equals(cart.prato().getId())).findFirst();
 		
-		if (exitingDish.isPresent()) {
-			Dish pratoExiste = exitingDish.get();
-			
-			double precoFinal = (pratoExiste.getPreco()*cart.quantidade())+carrinho.getValorTotal();
-			carrinho.setValorTotal(precoFinal);
+		if (pratoExiste.isPresent()) {
+			throw new RuntimeException("Prato já está no carrinho");
 		}else {
-			double precoFinal = (cart.prato().getPreco()*cart.quantidade())+carrinho.getValorTotal();
-			carrinho.setValorTotal(precoFinal);
+			CartDish novoPrato = new CartDish();
+			novoPrato.setDish(cart.prato());
+			novoPrato.setQuantidade(cart.quantidade());
 			
-			carrinho.getPratoSelecionado().add(cart.prato());
+			cartDishRepo.save(novoPrato);
+			carrinho.getPratoSelecionado().add(novoPrato);
+			
+			double novoValor = novoPrato.getQuantidade()*cart.prato().getPreco();
+			carrinho.setValorTotal(carrinho.getValorTotal() + novoValor);
+			
 		}
 		
 		return cartRepo.save(carrinho);
 	}
 	
 	
-	public void removeDish(Long cartId, CartRequestDTO prato) throws Exception {
+	public void removeDish(Long cartId, CartDishDTO prato) throws Exception {
 		Optional<Cart> findCart = cartRepo.findById(cartId);
-		
+				
 		if (findCart.isPresent()) {
 			Cart carrinho = findCart.get();
 			
-			if (carrinho.getPratoSelecionado().contains(prato.prato())) {
-				double precoRemovido = prato.prato().getPreco() * prato.quantidade();
-				double precoFinal = carrinho.getValorTotal() - precoRemovido;
+			Optional<CartDish> exitingDish = carrinho.getPratoSelecionado().stream()
+					.filter(p -> p.getDish().getId().equals(prato.prato().getId())).findFirst();
+			
+			if (exitingDish.isPresent()) {
 				
-				carrinho.setValorTotal(Math.max(precoFinal, 0));
-				
-				carrinho.getPratoSelecionado().remove(prato.prato());
-			    cartRepo.save(carrinho);		
+				 CartDish cartDish = exitingDish.get();
+		            
+		            double precoRemovido = cartDish.getDish().getPreco() * prato.quantidade();
+		            double precoFinal = carrinho.getValorTotal() - precoRemovido;
+		            
+		            carrinho.setValorTotal(Math.max(precoFinal, 0));
+		            
+		            carrinho.getPratoSelecionado().remove(cartDish);
+		            
+		            cartRepo.save(carrinho);	
 			}else {
 	            throw new Exception("Prato não encontrado no carrinho.");
 	        }	

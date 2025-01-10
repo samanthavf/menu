@@ -8,7 +8,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -24,8 +23,8 @@ public class Cart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToMany( fetch = FetchType.EAGER)
-	@JoinColumn(name = "cart_dishes")
-	private List<Dish> pratoSelecionado = new ArrayList<>();	
+	@OneToMany(fetch = FetchType.EAGER)
+	private List<CartDish> pratoSelecionado = new ArrayList<>();	
 	private double valorTotal;
+	
 }

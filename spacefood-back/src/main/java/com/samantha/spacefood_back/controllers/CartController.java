@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.samantha.spacefood_back.dtos.CartRequestDTO;
+import com.samantha.spacefood_back.dtos.CartDishDTO;
 import com.samantha.spacefood_back.entities.Cart;
 import com.samantha.spacefood_back.exception.CartNotFoundException;
 import com.samantha.spacefood_back.services.CartService;
@@ -41,12 +41,12 @@ public class CartController {
 	}
 	
 	@PostMapping("/carrinho/{cartId}")
-	public ResponseEntity<Cart> cart(@PathVariable Long cartId, @RequestBody CartRequestDTO prato){
+	public ResponseEntity<Cart> cart(@PathVariable Long cartId, @RequestBody CartDishDTO prato){
 		return new ResponseEntity<>(service.addDish(cartId,prato), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/remover/{cartId}")
-	public ResponseEntity<Void> update(@PathVariable Long cartId,@RequestBody CartRequestDTO prato) throws Exception{
+	public ResponseEntity<Void> update(@PathVariable Long cartId,@RequestBody CartDishDTO prato) throws Exception{
 			service.removeDish(cartId, prato);
 			return ResponseEntity.ok().build();
 	}
