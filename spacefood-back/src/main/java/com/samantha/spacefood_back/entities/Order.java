@@ -39,6 +39,7 @@ private double valorTotal= 0.0;
 @Column(name = "mesa")
 private int numeroMesa;
 
+
 public void addDish(List<Dish> pratosEncontrados) {
 	pratos.addAll(pratosEncontrados);
 	double totalAdd = pratosEncontrados.stream()
