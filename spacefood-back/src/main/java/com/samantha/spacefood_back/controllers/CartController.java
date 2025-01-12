@@ -42,7 +42,7 @@ public class CartController {
 	
 	@PostMapping("/carrinho/{cartId}")
 	public ResponseEntity<Cart> cart(@PathVariable Long cartId, @RequestBody CartDishDTO prato){
-		return new ResponseEntity<>(service.addDish(cartId,prato), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.addDish(cartId,prato),HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/remover/{cartId}")

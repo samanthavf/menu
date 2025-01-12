@@ -23,6 +23,6 @@ public class CartDish {
     private Long id;
 	@ManyToOne 
     @JoinColumn(name = "dish_id", nullable = false) 
-	private Dish dish;
+	private Dish prato;
 	private int quantidade;
 }

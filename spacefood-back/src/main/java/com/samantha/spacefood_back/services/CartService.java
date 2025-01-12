@@ -46,13 +46,13 @@ public class CartService {
 		Cart carrinho = findCart.get();
 		
 		Optional<CartDish> pratoExiste = carrinho.getPratoSelecionado().stream()
-				.filter(dish -> dish.getId().equals(cart.prato().getId())).findFirst();
+				.filter(dish -> dish.getPrato().getId().equals(cart.prato().getId())).findFirst();
 		
 		if (pratoExiste.isPresent()) {
 			throw new RuntimeException("Prato já está no carrinho");
 		}else {
 			CartDish novoPrato = new CartDish();
-			novoPrato.setDish(cart.prato());
+			novoPrato.setPrato(cart.prato());
 			novoPrato.setQuantidade(cart.quantidade());
 			
 			cartDishRepo.save(novoPrato);
@@ -60,9 +60,7 @@ public class CartService {
 			
 			double novoValor = novoPrato.getQuantidade()*cart.prato().getPreco();
 			carrinho.setValorTotal(carrinho.getValorTotal() + novoValor);
-			
 		}
-		
 		return cartRepo.save(carrinho);
 	}
 	
@@ -70,28 +68,23 @@ public class CartService {
 	public void removeDish(Long cartId, CartDishDTO prato) throws Exception {
 		Optional<Cart> findCart = cartRepo.findById(cartId);
 		if (findCart.isEmpty()) {throw new RuntimeException("Carrinho não encontrado");}
-			Cart carrinho = findCart.get();
+		Cart carrinho = findCart.get();
+		
+		CartDish pegarPrato = carrinho.getPratoSelecionado().stream()
+				.filter(p -> p.getPrato().getId().equals(prato.prato().getId())).findAny()
+				.orElseThrow(() -> new Exception("Prato não encontrado no carrinho: " + prato.prato()));
+				
+		if (pegarPrato.getQuantidade()!=prato.quantidade()){
+			throw new Exception("Quantidade invalida de pratos.");
 			
-			Optional<CartDish> pratoExistente = carrinho.getPratoSelecionado().stream()
-					.filter(p -> p.getDish().getId().equals(prato.prato().getId())).findFirst();
-			
-			if (pratoExistente.isEmpty()) {throw new Exception("Prato não encontrado no carrinho.");}	
-			
-			CartDish cartDish = pratoExistente.get();
-			
-			int quantidadeRemovida = Math.min(cartDish.getQuantidade(), prato.quantidade());
-			double precoRemovido = cartDish.getDish().getPreco()*quantidadeRemovida;
-			
-			 double precoFinal = carrinho.getValorTotal() - precoRemovido;
-			 carrinho.setValorTotal(Math.max(precoFinal, 0));
-			
-			if (quantidadeRemovida < cartDish.getQuantidade()) {
-				cartDish.setQuantidade(cartDish.getQuantidade() - quantidadeRemovida);
-				cartDishRepo.save(cartDish);
-			}else {
-				carrinho.getPratoSelecionado().remove(cartDish);
-				cartDishRepo.delete(cartDish);
-			}
-			cartRepo.save(carrinho);
+		}
+		
+	    double precoRemovido = pegarPrato.getPrato().getPreco() * prato.quantidade();
+	    double novoValorTotal = carrinho.getValorTotal() - precoRemovido;
+	    carrinho.setValorTotal(Math.max(novoValorTotal, 0));
+
+	    carrinho.getPratoSelecionado().remove(pegarPrato);
+	    cartRepo.save(carrinho);
+	    cartDishRepo.delete(pegarPrato);
 	}
 }
