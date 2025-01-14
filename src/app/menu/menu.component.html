@@ -26,7 +26,7 @@
 
               <div class="input-group">
                 <button class="btn btn-secondary" (click)="alterarQuantidade(prato.quantidade - 1, prato)" [disabled]="prato.quantidade < 1">-</button>
-                <input type="number" class="form-control text-center" [(ngModel)]="prato.quantidade" min="1" (change)="alterarQuantidade(prato.quantidade , prato)" />
+                <input type="number" class="form-control text-center" [(ngModel)]="prato.quantidade" min="1" (change)="alterarQuantidade(prato.quantidade, prato)" />
                 <button class="btn btn-secondary" (click)="alterarQuantidade(prato.quantidade + 1, prato)" >+</button>
               </div>
 

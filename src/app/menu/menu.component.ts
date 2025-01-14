@@ -47,14 +47,18 @@ getDishes(){
 } 
 
 addCarrinho(prato:Dish) {
-  const cartDTO = new CartDishDTO(prato, prato.quantidade);
-  this.service.addToCart(cartDTO).subscribe({
-    next:(retorno)=>{
-      console.log('Prato adicionado ao carrinho:', retorno);
-    },error:(error)=>{
-      console.error('Erro ao adicionar prato ao carrinho', error);
-    }
-  })
+  if (prato.quantidade > 0) {
+    const cartDTO = new CartDishDTO(prato, prato.quantidade);
+    this.service.addToCart(cartDTO).subscribe({
+      next:(retorno)=>{
+        console.log('Prato adicionado ao carrinho:', retorno);
+      },error:(error)=>{
+        console.error('Erro ao adicionar prato ao carrinho', error);
+      }
+    }) 
+  }else{
+    console.warn('A quantidade do prato deve ser maior que 0 para adicionar ao carrinho.');
+  }
 }
 
 carrinho() {
