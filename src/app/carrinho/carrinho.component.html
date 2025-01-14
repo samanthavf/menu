@@ -16,18 +16,19 @@
                 <th>Imagem</th>
                 <th>Nome</th>
                 <th>Preço</th>
+                <th>quantidade</th>
                 <th>Remover</th>
               </tr>
             </thead>
             <tbody>
-                  <tr *ngFor="let prato of prato.pratoSelecionado">
+                  <tr *ngFor="let cart of cart.pratoSelecionado; let i = index;">
                     <td>
-                      <img [src]="prato.imagem" alt="{{ prato.nome }}" width="100" height="100" />
-                    </td>
-                    <td>{{ prato.nome }}</td>
-                    <td>{{ prato.preco | currency: 'BRL' }}</td>
+                    <img [src]="cart.prato.imagem" alt="{{ cart.prato.imagem }}" width="200" height="200" />
+                    <td >{{ cart.prato.nome }}</td>
+                    <td >{{ cart.prato.preco | currency: 'BRL' }}</td>
+                    <td >{{ cart.quantidade }}</td>
                     <td>
-                  <button (click)="remover(prato)" class="btn btn-danger">Remover</button>
+                  <button (click)="remover(cart)" class="btn btn-danger">Remover</button>
                 </td>
               </tr>
             </tbody>

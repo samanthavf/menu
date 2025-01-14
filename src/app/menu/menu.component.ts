@@ -4,7 +4,8 @@ import { Dish, DishesByCategory } from '../model/Dishes';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { order } from '../model/Order';
+import { CartDishDTO } from '../model/CartDishDTO';
+import { Cart } from '../model/Cart';
 
 @Component({
   selector: 'app-menu',
@@ -19,13 +20,19 @@ import { order } from '../model/Order';
 
 export class MenuComponent {
 constructor(private service:MenuService, private router:Router){}
-
-results: any[] = [];
-pedido = new order();
-prato: Dish[]=[];
-
-
 pratosPorCategoria: DishesByCategory = {};
+pratos = new Dish()
+pratosCarrinho: CartDishDTO[] = [];
+
+alterarQuantidade(novaQuantidade:number,pratoSelecionado:Dish): void {
+     const item = this.pratosCarrinho.find((dto) => dto.prato.id === pratoSelecionado.id);
+  if (item) {
+    if (novaQuantidade >= 1 || novaQuantidade <= 20) {
+      item.quantidade = novaQuantidade;
+    }
+  }
+}
+
 
 ngOnInit(): void {
   this.getDishes(); 
@@ -40,10 +47,11 @@ getDishes(){
       console.log('Erro ao buscar pratos:', error);
     }}
   );
-}
+} 
 
 addCarrinho(prato:Dish) {
-  this.service.addToCart(prato).subscribe({
+  const cartDTO = new CartDishDTO(prato, prato.quantidade);
+  this.service.addToCart(cartDTO).subscribe({
     next:(retorno)=>{
       console.log('Prato adicionado ao carrinho:', retorno);
     },error:(error)=>{

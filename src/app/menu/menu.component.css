@@ -53,7 +53,18 @@ transform: translate(-50%, -50%); /* Ajusta a posição para o centro exato */
     overflow-x: hidden;
 }
 
-.row{
-    width: 70%;
-    height: 95vh;
+#btn-add{
+    position: absolute;
+    left: 45%;
 }
+
+.input-group {
+    display: flex;    
+    width: 130px;
+  }
+  
+  .input-group input[type="number"] {
+    width: 5px;
+    text-align: center;
+  }
+  

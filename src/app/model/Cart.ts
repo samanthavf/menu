@@ -1,7 +1,7 @@
-import { Dish } from "./Dishes";
+import { CartDishDTO } from "./CartDishDTO";
 
 export class Cart{
     id:number=0;
-    pratoSelecionado:Dish[]= [];
+    pratoSelecionado:CartDishDTO[]= [];
     valorTotal:number=0;
 }

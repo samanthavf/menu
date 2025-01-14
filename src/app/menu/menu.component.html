@@ -14,21 +14,22 @@
     <div *ngFor="let categoria of pratosPorCategoria | keyvalue" class="mb-5">
       <h2>{{ categoria.key }}</h2> <!-- Nome da categoria -->
       <div class="row">
-        <div class="col-md-4" *ngFor="let prato of categoria.value">
-          <div class="card mb-3 shadow-sm">
+        <div class="col-md-4" *ngFor="let prato of categoria.value;let i = index;">
+          <div class="card mb-3 shadow-sm" >
             <img
-              *ngIf="prato.imagem"
-              [src]="prato.imagem"
-              class="card-img-top"
-              alt="{{ prato.nome }}"
-            />
+              *ngIf="prato.imagem" [src]="prato.imagem" class="card-img-top" alt="{{ prato.nome }}"/>
             <div class="card-body">
               <h5 class="card-title">{{ prato.nome }}</h5>
               <p class="card-text">{{ prato.descricao }}</p>
-              <p class="card-text">Preço: {{ prato.preco | currency: 'BRL' }}</p>
-              <button class="btn btn-primary" (click)="addCarrinho(prato)">
-               adicionar ao carrinho
-              </button>
+              <p class="card-text" >Preço: {{ prato.preco | currency: 'BRL' }}</p>
+              <button class="btn btn-primary" id="btn-add" (click)="addCarrinho(prato)">adicionar ao carrinho</button>
+
+              <div class="input-group"  *ngIf="pratosCarrinho.find((item) => item.prato.id === prato.id) as item">
+                <button class="btn btn-secondary" (click)="alterarQuantidade(item - 1, prato)" [disabled]="prato.quantidade < 1">-</button>
+                <input type="number" class="form-control text-center" [(ngModel)]="prato.quantidade" [value]="prato.quantidade || 1"  min="1" max="20" (change)="alterarQuantidade(prato.quantidade , prato)" />
+                <button class="btn btn-secondary" (click)="alterarQuantidade(prato.quantidade + 1, prato)" [disabled]="prato.quantidade > 20">+</button>
+              </div>
+
             </div>
           </div>
         </div>

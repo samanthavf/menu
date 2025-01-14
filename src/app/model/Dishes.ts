@@ -5,8 +5,10 @@ export class Dish{
  preco: number= 0;
  imagem: string= '';
  categoria: string= '';
+ quantidade:number=0;
 }
 
 export interface DishesByCategory {
-    [key: string]: Dish[]; // Exemplo: "Massas": Dish[], "Sobremesas": Dish[]
+    [key: string]: Dish[]; 
   }
+
