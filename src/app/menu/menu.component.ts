@@ -22,17 +22,14 @@ export class MenuComponent {
 constructor(private service:MenuService, private router:Router){}
 pratosPorCategoria: DishesByCategory = {};
 pratos = new Dish()
-pratosCarrinho: CartDishDTO[] = [];
 
 alterarQuantidade(novaQuantidade:number,pratoSelecionado:Dish): void {
-     const item = this.pratosCarrinho.find((dto) => dto.prato.id === pratoSelecionado.id);
-  if (item) {
-    if (novaQuantidade >= 1 || novaQuantidade <= 20) {
-      item.quantidade = novaQuantidade;
-    }
+  pratoSelecionado.quantidade = 1;
+  if (novaQuantidade >= 1) {
+    pratoSelecionado.quantidade = novaQuantidade;
   }
+  return;
 }
-
 
 ngOnInit(): void {
   this.getDishes(); 
@@ -58,7 +55,7 @@ addCarrinho(prato:Dish) {
       console.error('Erro ao adicionar prato ao carrinho', error);
     }
   })
-  }
+}
 
 carrinho() {
   this.router.navigate(['/carrinho'])

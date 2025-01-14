@@ -24,10 +24,10 @@
               <p class="card-text" >Preço: {{ prato.preco | currency: 'BRL' }}</p>
               <button class="btn btn-primary" id="btn-add" (click)="addCarrinho(prato)">adicionar ao carrinho</button>
 
-              <div class="input-group"  *ngIf="pratosCarrinho.find((item) => item.prato.id === prato.id) as item">
-                <button class="btn btn-secondary" (click)="alterarQuantidade(item - 1, prato)" [disabled]="prato.quantidade < 1">-</button>
-                <input type="number" class="form-control text-center" [(ngModel)]="prato.quantidade" [value]="prato.quantidade || 1"  min="1" max="20" (change)="alterarQuantidade(prato.quantidade , prato)" />
-                <button class="btn btn-secondary" (click)="alterarQuantidade(prato.quantidade + 1, prato)" [disabled]="prato.quantidade > 20">+</button>
+              <div class="input-group">
+                <button class="btn btn-secondary" (click)="alterarQuantidade(prato.quantidade - 1, prato)" [disabled]="prato.quantidade < 1">-</button>
+                <input type="number" class="form-control text-center" [(ngModel)]="prato.quantidade" min="1" (change)="alterarQuantidade(prato.quantidade , prato)" />
+                <button class="btn btn-secondary" (click)="alterarQuantidade(prato.quantidade + 1, prato)" >+</button>
               </div>
 
             </div>
