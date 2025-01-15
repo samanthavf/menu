@@ -48,7 +48,7 @@ transform: translate(-50%, -50%); /* Ajusta a posição para o centro exato */
     width: 75%;
     height: 85vh;
     bottom: 5%;
-    right: 15px;
+    right: 10%;
     background: linear-gradient(135deg, #e0f7fa, #c8b6e2, 0.2);
     overflow-x: hidden;
 }

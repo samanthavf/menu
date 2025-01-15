@@ -6,6 +6,8 @@ import { MenuService } from '../services/menu.service';
 import { Router } from '@angular/router';
 import { CartDishDTO } from '../model/CartDishDTO';
 import { Cart } from '../model/Cart';
+import { order } from '../model/Order';
+import { error } from 'console';
 
 @Component({
   selector: 'app-carrinho',
@@ -23,6 +25,7 @@ constructor(private router:Router, private service:MenuService){}
 
 cart = new Cart();
 dish = new Dish();
+pedido = new order(this.cart);
 
 ngOnInit(): void{
   this.getOrders();
@@ -43,7 +46,6 @@ remover(prato:CartDishDTO) {
   this.service.removeToCart(prato).subscribe({
     next:(retorno)=>{
       console.log('Prato removido com sucesso.', retorno);
-
       try {
         this.getOrders();
       } catch (error) {
@@ -55,6 +57,17 @@ remover(prato:CartDishDTO) {
     }
   });
   }
+
+  order(pedidos:order) {
+    this.service.addOrder(pedidos).subscribe({
+      next:(retorno)=>{
+        console.log("Pedido finalizado.", retorno);
+      },
+      error:(error)=>{
+        console.log("Erro ao fazer pedido.", error);
+      }
+    });
+    }
 
 back() {
   this.router.navigate(['/menu'])
