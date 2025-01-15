@@ -1,9 +1,7 @@
 package com.samantha.spacefood_back.dtos;
 
-import java.util.List;
+import com.samantha.spacefood_back.entities.Cart;
 
-import com.samantha.spacefood_back.entities.Dish;
-
-public record OrderDTO(List<Dish> pratos,List<String> pratosPedidos,int numeroMesa) {
+public record OrderDTO(int numeroMesa,Cart carrinho) {
 
 }

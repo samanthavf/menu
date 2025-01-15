@@ -1,7 +1,6 @@
 package com.samantha.spacefood_back.controllers;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import com.samantha.spacefood_back.dtos.OrderDTO;
 import com.samantha.spacefood_back.entities.Order;
 import com.samantha.spacefood_back.services.OrderService;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -28,20 +26,24 @@ import lombok.RequiredArgsConstructor;
 public class OrderController {
 	private final OrderService service;
 	
-	@PostMapping("/pedir")
-	public ResponseEntity<Order> create(@RequestBody @Valid OrderDTO dto) throws Exception{
-		return new ResponseEntity<>(service.createOrder(dto), HttpStatus.CREATED);
+	@PostMapping("/fazer-pedido/{cartId}")
+	public ResponseEntity<Order> create(@PathVariable Long cartId,@RequestBody OrderDTO dto){
+		return new ResponseEntity<>(service.createOrder(cartId, dto), HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/listar")
-	public ResponseEntity<List<Order>> read(Pageable pageable){
-		return ResponseEntity.ok(service.readOrders(pageable));
+	@GetMapping("/pedido/{id}")
+	public ResponseEntity<Order> getById(@PathVariable Long id){
+		return ResponseEntity.ok(service.getById(id));
+	}
+
+	@GetMapping("/listar-pedidos")
+	public ResponseEntity<Page<Order>> getAllOrders(Pageable pageable){
+		return ResponseEntity.ok(service.getAllOrders(pageable));
 	}
 	
-	@DeleteMapping(path = "/remover/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception{
-		service.cancelOrder(id);
+	@DeleteMapping("/cancelar-pedido/{id}")
+	public ResponseEntity<Void> deleteOrder(@PathVariable Long id){
+		service.deleteOrder(id);
 		return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 	}
-	
 }
