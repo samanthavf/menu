@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Dish } from '../model/Dishes';
 import { MenuService } from '../services/menu.service';
 import { Router } from '@angular/router';
 import { CartDishDTO } from '../model/CartDishDTO';
 import { Cart } from '../model/Cart';
 import { order } from '../model/Order';
-import { error } from 'console';
 
 declare var bootstrap: any;
 
@@ -25,10 +23,10 @@ declare var bootstrap: any;
 export class CarrinhoComponent{
 constructor(private router:Router, private service:MenuService){}
 
- mensagemModal: string = 'pratos: ';
+mensagemModal: string = 'pratos: ';
 cart = new Cart();
-dish = new Dish();
 pedido = new order(this.cart);
+
 
 ngOnInit(): void{
   this.getOrders();
@@ -62,25 +60,29 @@ remover(prato:CartDishDTO) {
   }
 
 
+  openModal(){
+    const modal = new bootstrap.Modal(document.getElementById('pedidoModal'));
+    modal.show();
+  }
   
+
   order(pedidos:order) {
     this.service.addOrder(pedidos).subscribe({
       next:(retorno)=>{
         console.log("Pedido finalizado.", retorno);
-        const modal = new bootstrap.Modal(document.getElementById('pedidoModal'));
-           modal.show();
       },
       error:(error)=>{
-        console.log("Erro ao fazer pedido.", error);
+        console.log("Erro ao finalizar pedido.", error);
       }
     });
     }
 
-    confirmarPedido(carrinho:Cart) {
+    confirmarPedido(carrinho:Cart, pedido:order) {
     this.service.clearCart(carrinho).subscribe({
       next:()=>{
         console.log('Pedido confirmado.')   
         this.mensagemModal = 'Pedido enviado.';
+        this.order(pedido);
         this.getOrders();
       },
       error:(error)=>{
@@ -89,8 +91,6 @@ remover(prato:CartDishDTO) {
     })
 }
 
-back() {
-  this.router.navigate(['/menu'])
-  }
+back() {this.router.navigate(['/menu'])}
 
 }

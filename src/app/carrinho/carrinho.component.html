@@ -38,7 +38,7 @@
                 <td colspan="2">Valor total: {{ cart.valorTotal }}</td>
                 <td>Mesa Nº: <input type="number" id="mesa-input" [(ngModel)]="pedido.numeroMesa" [disabled]="pedido.numeroMesa < 0"/></td>
                 <td></td>
-                <td colspan="2"><button class="btn btn-success" (click)="order(pedido)">Fazer Pedido</button></td>
+                <td colspan="2"><button class="btn btn-success" (click)="openModal()">Fazer Pedido</button></td>
               </tr>
             </tfoot>
 
@@ -70,7 +70,7 @@
         <p>valor total: <strong>{{ cart.valorTotal | currency: 'BRL' }}</strong></p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="confirmarPedido(cart)">Confirmar Pedido</button>
+        <button type="button" class="btn btn-primary" (click)="confirmarPedido(cart, pedido)">Confirmar Pedido</button>
       </div>
     </div>
   </div>
