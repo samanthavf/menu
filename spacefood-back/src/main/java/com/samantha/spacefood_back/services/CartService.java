@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class CartService {
 	private final CartRepo cartRepo;
 	private final CartDishRepo cartDishRepo;
+
 	
 	@Transactional
 	public Cart cart(Long id){
@@ -39,6 +40,12 @@ public class CartService {
 	    return cartRepo.save(carrinho);
 	}
 
+	public void limparCarrinho(Long cartId) {
+	    cartRepo.findById(cartId).ifPresentOrElse(carrinho -> {
+	    	carrinho.getPratoSelecionado().clear();
+	    	carrinho.setValorTotal(0);
+	    	cartRepo.save(carrinho);},()-> {throw new RuntimeException("Carrinho não encontrado");});
+	}
 	
 	public Cart addDish(Long cartId,CartDishDTO cart) {
 		Optional<Cart> findCart = cartRepo.findById(cartId);
@@ -87,4 +94,5 @@ public class CartService {
 	    cartRepo.save(carrinho);
 	    cartDishRepo.delete(pegarPrato);
 	}
+	
 }

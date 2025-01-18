@@ -50,4 +50,10 @@ public class CartController {
 			service.removeDish(cartId, prato);
 			return ResponseEntity.ok().build();
 	}
+	
+	@PutMapping("/limpar/{cartId}")
+	public ResponseEntity<Void> clearCart(@PathVariable Long cartId){
+		service.limparCarrinho(cartId);
+		return ResponseEntity.ok().build();
+	}
 }
