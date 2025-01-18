@@ -23,7 +23,7 @@
             <tbody>
                   <tr *ngFor="let cart of cart.pratoSelecionado; let i = index;">
                     <td>
-                    <img [src]="cart.prato.imagem" alt="{{ cart.prato.imagem }}" width="100" height="100" />
+                    <img [src]="cart.prato.imagem" alt="{{ cart.prato.imagem }}" width="150" height="130" />
                     <td >{{ cart.prato.nome }}</td>
                     <td >{{ cart.prato.preco | currency: 'BRL' }}</td>
                     <td >{{ cart.quantidade }}</td>
@@ -36,14 +36,9 @@
             <tfoot>
               <tr>
                 <td colspan="2">Valor total: {{ cart.valorTotal }}</td>
-                <td>
-                  N° Mesa:
-                  <input type="number" [(ngModel)]="pedido.numeroMesa" [disabled]="pedido.numeroMesa < 0" />
-                </td>
+                <td>Mesa Nº: <input type="number" id="mesa-input" [(ngModel)]="pedido.numeroMesa" [disabled]="pedido.numeroMesa < 0"/></td>
                 <td></td>
-                <td colspan="2">
-                  <button class="btn btn-success" (click)="order(pedido)">Fazer Pedido</button>
-                </td>
+                <td colspan="2"><button class="btn btn-success" (click)="order(pedido)">Fazer Pedido</button></td>
               </tr>
             </tfoot>
 

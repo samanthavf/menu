@@ -44,4 +44,27 @@
     margin-top: 15px;
 }
 
+#mesa-input{
+    width: 50px;
+}
+
+.table thead,
+.table tfoot {
+  position: sticky;
+  z-index: 2;
+ 
+}
+
+.table tfoot {
+    font-weight: bold; /* Torna o texto do rodapé em negrito */
+  }
+  
+.table thead {
+  top: 0; 
+}
+
+.table tfoot {
+  bottom: 0;
+}
+
   
