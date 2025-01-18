@@ -21,6 +21,9 @@ export class MenuService{
 
     private urlAdicionarCart:string='http://localhost:8080/cart/carrinho'
     addToCart(prato:CartDishDTO): Observable<any>{return this.http.post<CartDishDTO>(`${this.urlAdicionarCart}/${1}`, prato);}
+    
+    private urlLimparCart:string = 'http://localhost:8080/cart/limpar'
+    clearCart(cart:Cart):Observable<void>{return this.http.put<void>(`${this.urlLimparCart}/${1}`, cart)}
 
     private urlremoverPrato:string='http://localhost:8080/cart/remover'
     removeToCart(prato:CartDishDTO):Observable<any>{return this.http.put<CartDishDTO>(`${this.urlremoverPrato}/${1}`, prato);}

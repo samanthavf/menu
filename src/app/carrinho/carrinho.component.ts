@@ -9,6 +9,8 @@ import { Cart } from '../model/Cart';
 import { order } from '../model/Order';
 import { error } from 'console';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-carrinho',
   standalone: true,
@@ -23,6 +25,7 @@ import { error } from 'console';
 export class CarrinhoComponent{
 constructor(private router:Router, private service:MenuService){}
 
+ mensagemModal: string = 'pratos: ';
 cart = new Cart();
 dish = new Dish();
 pedido = new order(this.cart);
@@ -58,16 +61,33 @@ remover(prato:CartDishDTO) {
   });
   }
 
+
+  
   order(pedidos:order) {
     this.service.addOrder(pedidos).subscribe({
       next:(retorno)=>{
         console.log("Pedido finalizado.", retorno);
+        const modal = new bootstrap.Modal(document.getElementById('pedidoModal'));
+           modal.show();
       },
       error:(error)=>{
         console.log("Erro ao fazer pedido.", error);
       }
     });
     }
+
+    confirmarPedido(carrinho:Cart) {
+    this.service.clearCart(carrinho).subscribe({
+      next:()=>{
+        console.log('Pedido confirmado.')   
+        this.mensagemModal = 'Pedido enviado.';
+        this.getOrders();
+      },
+      error:(error)=>{
+        console.log('Erro ao confirmar pedido.', error)
+      }
+    })
+}
 
 back() {
   this.router.navigate(['/menu'])
