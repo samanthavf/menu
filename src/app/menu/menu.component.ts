@@ -29,7 +29,7 @@ alterarQuantidade(novaQuantidade:number,pratoSelecionado:Dish): void {
     pratoSelecionado.quantidade = novaQuantidade;
   }
   return;
-}
+} 
 
 ngOnInit(): void {
   this.getDishes(); 
@@ -52,8 +52,10 @@ addCarrinho(prato:Dish) {
     this.service.addToCart(cartDTO).subscribe({
       next:(retorno)=>{
         console.log('Prato adicionado ao carrinho:', retorno);
+        alert('Prato adicionado!')
       },error:(error)=>{
         console.error('Erro ao adicionar prato ao carrinho', error);
+        alert('Ops, algo deu errado ao adicionar ao carrinho.')
       }
     }) 
   }else{

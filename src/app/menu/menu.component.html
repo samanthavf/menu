@@ -22,7 +22,7 @@
               <h5 class="card-title">{{ prato.nome }}</h5>
               <p class="card-text">{{ prato.descricao }}</p>
               <p class="card-text" >Preço: {{ prato.preco | currency: 'BRL' }}</p>
-              <button class="btn btn-primary" id="btn-add" (click)="addCarrinho(prato)">adicionar ao carrinho</button>
+              <button class="btn btn-primary" id="btn-add"  (click)="addCarrinho(prato)">Adicionar ao Carrinho</button>
 
               <div class="input-group">
                 <button class="btn btn-secondary" (click)="alterarQuantidade(prato.quantidade - 1, prato)" [disabled]="prato.quantidade < 1">-</button>
