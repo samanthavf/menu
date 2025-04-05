@@ -1,0 +1,42 @@
+<div class="aba">
+    <img src="spacefood-icon.png" id="icone" alt="spacefood-icon">
+    <h1 id="titulo">SpaceFood</h1>
+    <img src="carrinhos-de-compras.png" id="carrinho" alt="carrinho" (click)="carrinho()">
+</div>
+
+<div class="image-back">
+    <img src="spaceman-noodles.png" alt="spaceman-noodles">
+</div>
+
+<div class="menu-container">
+  
+  <div class="container mt-4">
+    <div *ngFor="let categoria of pratosPorCategoria | keyvalue" class="mb-5">
+      <h2>{{ categoria.key }}</h2> <!-- Nome da categoria -->
+      <div class="row">
+        <div class="col-md-4" *ngFor="let prato of categoria.value;let i = index;">
+          <div class="card mb-3 shadow-sm" >
+            <img
+              *ngIf="prato.imagem" [src]="prato.imagem" class="card-img-top" alt="{{ prato.nome }}"/>
+            <div class="card-body">
+              <h5 class="card-title">{{ prato.nome }}</h5>
+              <p class="card-text">{{ prato.descricao }}</p>
+              <p class="card-text" >Preço: {{ prato.preco | currency: 'BRL' }}</p>
+              <button class="btn btn-primary" id="btn-add"  (click)="addCarrinho(prato)">Adicionar ao Carrinho</button>
+
+              <div class="input-group">
+                <button class="btn btn-secondary" (click)="alterarQuantidade(prato.quantidade - 1, prato)" [disabled]="prato.quantidade < 1">-</button>
+                <input type="number" class="form-control text-center" [(ngModel)]="prato.quantidade" min="1" (change)="alterarQuantidade(prato.quantidade, prato)" />
+                <button class="btn btn-secondary" (click)="alterarQuantidade(prato.quantidade + 1, prato)" >+</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+</div>
+

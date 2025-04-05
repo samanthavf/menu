@@ -1,0 +1,70 @@
+.aba{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(217, 246, 250, 0.9); /* Azul translúcido claro */
+    border: 1px solid rgba(200, 230, 250, 0.5); /* Azul suave claro */
+    color: #0288d1; /* Azul escuro para o texto */
+    box-shadow: 0px 4px 10px rgba(0, 122, 204, 0.3); 
+    backdrop-filter: blur(10px); /* Efeito de vidro fosco */
+    border: 1px solid rgba(210, 190, 220, 0.5);
+    overflow: hidden;
+}
+
+#icone{
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    left: 20px;
+}
+
+#titulo{
+    position: absolute;
+    left: 5%;
+    margin-top: 8px;
+    font-size: 40px;
+}
+
+#carrinho{
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    top: 15px;
+    right: 6%;
+}
+
+.image-back{
+position: absolute;
+top: 50%; /* Centraliza verticalmente */
+left: 50%; /* Centraliza horizontalmente */
+transform: translate(-50%, -50%); /* Ajusta a posição para o centro exato */
+}
+
+.menu-container{
+    position: absolute;
+    width: 75%;
+    height: 85vh;
+    bottom: 5%;
+    right: 10%;
+    background: linear-gradient(135deg, #e0f7fa, #c8b6e2, 0.2);
+    overflow-x: hidden;
+}
+
+#btn-add{
+    position: absolute;
+    left: 45%;
+}
+
+.input-group {
+    display: flex;    
+    width: 130px;
+  }
+  
+  .input-group input[type="number"] {
+    width: 5px;
+    text-align: center;
+  }
+  

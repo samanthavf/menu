@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #e8f9fc, #d0c2e4);
+    background-size: 400% 400%;
+    animation: backgroundShift 10s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0288d1; /* Azul escuro para o texto */
+    font-family:'Poppins', sans-serif;
+}
+
+@keyframes backgroundShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}

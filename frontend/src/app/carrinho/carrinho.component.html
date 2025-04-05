@@ -1,0 +1,77 @@
+<div class="aba">
+    <img src="spacefood-icon.png" id="icone" alt="spacefood-icon">
+    <h1 id="titulo">SpaceFood</h1>
+    <button class="btn btn-success" id="menu-button" (click)="back()">Cardápio</button>
+</div>
+
+<div class="image-back">
+    <img src="spaceman-donouts.png" alt="sapceman-donouts">
+</div>
+
+<div class="container-back">
+        <div class="container-tabela">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Imagem</th>
+                <th>Nome</th>
+                <th>Preço</th>
+                <th>quantidade</th>
+                <th>Remover</th>
+              </tr>
+            </thead>
+            <tbody>
+                  <tr *ngFor="let cart of cart.pratoSelecionado; let i = index;">
+                    <td>
+                    <img [src]="cart.prato.imagem" alt="{{ cart.prato.imagem }}" width="150" height="130" />
+                    <td >{{ cart.prato.nome }}</td>
+                    <td >{{ cart.prato.preco | currency: 'BRL' }}</td>
+                    <td >{{ cart.quantidade }}</td>
+                    <td>
+                  <button (click)="remover(cart)" class="btn btn-danger">Remover</button>
+                </td>
+              </tr>
+            </tbody>
+
+            <tfoot>
+              <tr>
+                <td colspan="2">Valor total: {{ cart.valorTotal }}</td>
+                <td>Mesa Nº: <input type="number" id="mesa-input" [(ngModel)]="pedido.numeroMesa" [disabled]="pedido.numeroMesa < 0"/></td>
+                <td></td>
+                <td colspan="2"><button class="btn btn-success" (click)="openModal()">Fazer Pedido</button></td>
+              </tr>
+            </tfoot>
+
+          </table>
+        </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="pedidoModal" tabindex="-1" aria-labelledby="pedidoModalLabel" aria-hidden="true"  data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="pedidoModalLabel">SpaceFood Restaurante</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Confirmar pedido da mesa: <strong>{{ pedido.numeroMesa }}</strong></p>
+        <p><strong> {{ mensagemModal }} </strong> </p>
+        <table class="table">
+          <tbody>
+            <tr *ngFor="let prato of cart.pratoSelecionado">
+              <td>{{ prato.prato.nome }}</td>
+              <td>{{ prato.quantidade }}</td>
+              <td>{{ prato.prato.preco | currency: 'BRL' }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>valor total: <strong>{{ cart.valorTotal | currency: 'BRL' }}</strong></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="confirmarPedido(cart, pedido)">Confirmar Pedido</button>
+      </div>
+    </div>
+  </div>
+</div>
